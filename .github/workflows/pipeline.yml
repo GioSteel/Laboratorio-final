@@ -1,0 +1,22 @@
+name: pipeline
+
+on:
+  push:
+    branches:
+      -  feature-*
+
+jobs:
+  SAST:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Clone Repo
+        run: |
+          echo "Testing github workflow"
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+          
+      - name: Install Dependenscies
+        run: npm install
+        
