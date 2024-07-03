@@ -1,5 +1,4 @@
 name: pipeline-ci
-
 on:
   push:
     branches:
@@ -11,9 +10,7 @@ jobs:
 
     steps:
       - name: Clone Repo
-        run: |
-          echo "Testing github workflow"
-          uses: actions/checkout@v4
+        uses: actions/checkout@v4
           with:
             fetch-depth: 0
           
