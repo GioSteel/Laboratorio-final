@@ -1,4 +1,4 @@
-name: pipeline
+name: pipeline-ci
 
 on:
   push:
@@ -17,6 +17,6 @@ jobs:
           with:
             fetch-depth: 0
           
-      - name: Install Dependenscies
+      - name: Install dependencies
         run: npm install
         
