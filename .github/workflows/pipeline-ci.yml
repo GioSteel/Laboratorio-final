@@ -18,7 +18,7 @@ jobs:
           sonarcloud_create_project=$(curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/projects/create' \
             -d 'name=${{ github.event.repository.name }}' \
             -d 'project=${{ github.event.repository.name }}' \
-            -d 'organization=${{ github.repository_owner }}' \
+            -d 'organization=${{ secrets.ORG }}' \
             -d 'visibility=public' \
             -w "\n%{http_code}")
           sonarcloud_create_project_status=$(tail -n1 <<< "$sonarcloud_create_project") 
