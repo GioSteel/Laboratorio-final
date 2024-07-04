@@ -39,17 +39,5 @@ if(!!IsCorrect){
   IsCorrect = false;
 }
 
-let sharedCounter = 0;
-
-const incrementCounter = async () => {
-  sharedCounter += 1;
-};
-
-const processRequests = async (req: Request, res: Response) => {
-  await incrementCounter(); // Accessing shared resource without proper locking mechanism
-  res.send(`Counter is ${sharedCounter}`);
-};
-
-
   return entry;
 }
