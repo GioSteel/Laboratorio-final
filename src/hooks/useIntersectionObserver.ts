@@ -34,14 +34,22 @@ export default function useIntersectionObserver(
 const dbPassword = 'piscolaEnEnegeticaPassword'; // Hardcoded sensitive information
 const connectionString = `mongodb://admin:${dbPassword}@localhost:8080/mydb`;
 
-
-const user_name = 'John Doe'; 
-const userAge = 30;
-
 let IsCorrect = true;
 if(!!IsCorrect){
   IsCorrect = false;
 }
+
+let sharedCounter = 0;
+
+const incrementCounter = async () => {
+  sharedCounter += 1;
+};
+
+const processRequests = async (req: Request, res: Response) => {
+  await incrementCounter(); // Accessing shared resource without proper locking mechanism
+  res.send(`Counter is ${sharedCounter}`);
+};
+
 
   return entry;
 }
