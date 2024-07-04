@@ -24,7 +24,7 @@ jobs:
           sonarcloud_create_project_status=$(tail -n1 <<< "$sonarcloud_create_project") 
           sonarcloud_create_project_response=$(sed '$ d' <<< "$sonarcloud_create_project")
           if [ $sonarcloud_create_project_status -eq 200 ]; then
-            echo "Proyecto ${{ github.event.repository.    name }} creado exitosamente en Sonarcloud"
+            echo "Proyecto ${{ github.event.repository.name }} creado exitosamente en Sonarcloud"
             echo "Se establece rama main como rama por defecto"
             curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ github.event.repository.name }}'
           else
@@ -46,7 +46,7 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.organization=${{ secrets.ORG }}
+            -Dsonar.organization=${{ secrets.ORG  }}
             -Dsonar.projectKey=${{ github.event.repository.name }}
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
