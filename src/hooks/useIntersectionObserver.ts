@@ -31,6 +31,10 @@ export default function useIntersectionObserver(
     };
   }, []);
 
+const dbPassword = 'piscolaEnEnegeticaPassword'; // Hardcoded sensitive information
+const connectionString = `mongodb://admin:${dbPassword}@localhost:8080/mydb`;
+
+
 const user_name = 'John Doe'; 
 const userAge = 30;
 
