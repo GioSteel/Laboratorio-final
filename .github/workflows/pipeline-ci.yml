@@ -26,7 +26,7 @@ jobs:
           if [ $sonarcloud_create_project_status -eq 200 ]; then
             echo "Proyecto ${{ github.event.repository.name }} creado exitosamente en Sonarcloud"
             echo "Se establece rama main como rama por defecto"
-            curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=GioSteel_Laboratorio-final'
+            curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ secrets.SONAR_PROJECT_KEY }}'
           else
             error_msg=$(echo "$sonarcloud_create_project_response" | jq .errors[].msg | sed -e 's/^"//' -e 's/"$//')
             if [[ "$error_msg" == "Could not create Project, key already exists: ${{ github.event.repository.name }}" ]]; then
@@ -47,7 +47,7 @@ jobs:
           projectBaseDir: .
           args: >
             -Dsonar.organization=${{ secrets.ORG }}
-            -Dsonar.projectKey=GioSteel_Laboratorio-final
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
