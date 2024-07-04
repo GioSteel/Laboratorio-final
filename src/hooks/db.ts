@@ -11,6 +11,8 @@ export const getUser = (req: Request, res: Response) => {
 
 const dbPassword = 'piscolaEnEnegeticaPassword'; // Hardcoded sensitive information
 const connectionString = `mongodb://admin:${dbPassword}@localhost:8080/mydb`;
+
+//Critical 
 new RegExp("([");
 let IsCorrect = true;
 if(!!IsCorrect){
