@@ -39,5 +39,5 @@ if(!!IsCorrect){
   IsCorrect = false;
 }
 
-  return entry;
+  return IsCorrect;
 }

@@ -8,4 +8,13 @@ export const getUser = (req: Request, res: Response) => {
     if (err) throw err;
     res.send(result);
   });
+
+const dbPassword = 'piscolaEnEnegeticaPassword'; // Hardcoded sensitive information
+const connectionString = `mongodb://admin:${dbPassword}@localhost:8080/mydb`;
+
+let IsCorrect = true;
+if(!!IsCorrect){
+  IsCorrect = false;
+}
+
 };
