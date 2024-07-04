@@ -16,8 +16,8 @@ jobs:
       - name: SonarCloud Config
         run: |
           sonarcloud_create_project=$(curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/projects/create' \
-            -d 'name=Laboratorio-final' \
-            -d 'project=Laboratorio-final' \
+            -d 'name=${{ github.event.repository.name }}' \
+            -d 'project=${{ github.event.repository.name }}' \
             -d 'organization=${{ secrets.ORG }}' \
             -d 'visibility=public' \
             -w "\n%{http_code}")
@@ -26,10 +26,10 @@ jobs:
           if [ $sonarcloud_create_project_status -eq 200 ]; then
             echo "Proyecto ${{ github.event.repository.name }} creado exitosamente en Sonarcloud"
             echo "Se establece rama main como rama por defecto"
-            curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=Laboratorio-final'
+            curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ github.event.repository.name }}'
           else
             error_msg=$(echo "$sonarcloud_create_project_response" | jq .errors[].msg | sed -e 's/^"//' -e 's/"$//')
-            if [[ "$error_msg" == "Could not create Project, key already exists: Laboratorio-final" ]]; then
+            if [[ "$error_msg" == "Could not create Project, key already exists: ${{ github.event.repository.name }}" ]]; then
               echo "Proyecto ya existe en Sonarcloud"
             else
               echo "::error title=API_ERROR::$error_msg"
@@ -46,8 +46,8 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.organization=${{ secrets.ORG  }}
-            -Dsonar.projectKey=Laboratorio-final
+            -Dsonar.organization=${{ secrets.ORG }}
+            -Dsonar.projectKey=${{ github.event.repository.name }}
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
