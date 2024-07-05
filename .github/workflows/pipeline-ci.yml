@@ -24,13 +24,12 @@ jobs:
           sonarcloud_create_project_status=$(tail -n1 <<< "$sonarcloud_create_project") 
           sonarcloud_create_project_response=$(sed '$ d' <<< "$sonarcloud_create_project")
           if [ $sonarcloud_create_project_status -eq 200 ]; then
-            echo "Proyecto ${{ github.event.repository.name }} creado exitosamente en Sonarcloud"
-            echo "Se establece rama main como rama por defecto"
+            echo "Project ${{ github.event.repository.name }} created successfully on Sonarcloud"
             curl -s -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ secrets.SONAR_PROJECT_KEY }}'
           else
             error_msg=$(echo "$sonarcloud_create_project_response" | jq .errors[].msg | sed -e 's/^"//' -e 's/"$//')
             if [[ "$error_msg" == "Could not create Project, key already exists: ${{ github.event.repository.name }}" ]]; then
-              echo "Proyecto ya existe en Sonarcloud"
+              echo "Project already exists on Sonarcloud"
             else
               echo "::error title=API_ERROR::$error_msg"
             fi
