@@ -57,9 +57,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
 
-
-
- SCA:
+  SCA:
     needs: SAST
     runs-on: 'ubuntu-latest'
 
@@ -79,7 +77,10 @@ jobs:
         with:
           project: '${{ github.event.repository.name }}'
           path: '.'
-          format: 'HTML'
+          format: 'JSON'
+          args: >
+            -f HTML
+            --disableYarnAudit
 
       - name: Upload Artifact
         uses: actions/upload-artifact@master
