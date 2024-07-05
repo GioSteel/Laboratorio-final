@@ -87,3 +87,15 @@ jobs:
         with:
           name: Dependency-Check Report
           path: ${{github.workspace}}/reports
+
+      - name: Evaluate Dependency-Check Report
+        run: |
+          critical_vulnerabilities=$(jq '[ .dependencies[].vulnerabilities[]? | select(.severity?|ascii_upcase == "CRITICAL")] | length' ${{github.workspace}}/reports/dependency-check-report.json)
+          high_vulnerabilities=$(jq '[ .dependencies[].vulnerabilities[]? | select(.severity?|ascii_upcase == "HIGH")] | length' ${{github.workspace}}/reports/dependency-check-report.json)
+          medium_vulnerabilities=$(jq '[ .dependencies[].vulnerabilities[]? | select(.severity?|ascii_upcase == "MEDIUM")] | length' ${{github.workspace}}/reports/dependency-check-report.json)
+          if [ $critical_vulnerabilities -gt 0 ] || [ $high_vulnerabilities -gt 0 ] || [ $medium_vulnerabilities -gt 0 ]; then
+            echo "::error title=SCA::Have been found $critical_vulnerabilities Vulnerabilities Critical, $high_vulnerabilities Vulnerabilities Major y $medium_vulnerabilities Vulnerabilities Minor."
+            exit 1
+          else
+            echo "Have not been found Vulnerabilities"
+          fi  
