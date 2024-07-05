@@ -26,7 +26,7 @@
     "vite-tsconfig-paths": "^3.5.2",
     "@zenuml/core": "^3.0.1",
     "electron": "^29.4.3",
-    "@elza/keepalive": "^0.0.1"
+    "@elza/auto-route-plugin": "^0.0.1"
     
 
   },
