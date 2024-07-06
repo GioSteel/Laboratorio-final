@@ -99,7 +99,7 @@ jobs:
             echo "Have not been found Vulnerabilities"
           fi  
 
-Build:
+  Build:
     needs: 'SCA'
     runs-on: 'self-hosted'
 
