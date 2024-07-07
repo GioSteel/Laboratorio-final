@@ -18,6 +18,6 @@
     "baseUrl": ".",
 
   },
-  "include": ["src", "config"],
+  "include": ["src", "./env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
