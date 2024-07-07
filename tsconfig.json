@@ -16,8 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "types": ["webpack-env", "vite/client"]
+
   },
-  "include": ["src"],
+  "include": ["src", "config"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
