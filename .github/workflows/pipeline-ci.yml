@@ -120,17 +120,18 @@ jobs:
 
       - name: Build
         run: |
-          docker build --build-arg TMDB_V3_API_KEY=${{ secrets.TMDB_V3_API_KEY }} -t GioSteel/${{ github.event.repository.name }}:latest .
+          docker build --build-arg TMDB_V3_API_KEY=${{ secrets.TMDB_V3_API_KEY }} -t giosteel/${{ github.event.repository.name }}:latest .
 
 
       - name: Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'GioSteel/${{ github.event.repository.name }}:latest'
+          image-ref: 'giosteel/${{ github.event.repository.name }}:latest'
           format: 'table'
           ignore-unfixed: true
           severity: 'MEDIUM,HIGH,CRITICAL'
           exit-code: '1'
+
 
 
 
