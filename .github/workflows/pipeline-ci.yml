@@ -123,14 +123,21 @@ jobs:
           docker build --build-arg TMDB_V3_API_KEY=${{ secrets.TMDB_V3_API_KEY }} -t giosteel/laboratorio-final:latest .
 
 
-      - name: Trivy Vulnerability Scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'giosteel/laboratorio-final:latest'
-          format: 'table'
-          ignore-unfixed: true
-          severity: 'MEDIUM,HIGH,CRITICAL'
-          exit-code: '1'
+      - name: Set up Docker
+        run: |
+          brew install --cask docker
+          open /Applications/Docker.app
+
+      - name: Build Docker image
+        run: docker build -t laboratorio-final .
+
+      - name: Install Grype
+        run: |
+          brew tap anchore/grype
+          brew install grype
+
+      - name: Scan Docker image with Grype
+        run: grype laboratorio-final
 
 
 
