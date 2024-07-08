@@ -156,7 +156,7 @@ jobs:
     steps:
       - name: Deploy on Docker
         run: |
-          docker run -p 8080:80 --name ${{ github.event.repository.name }} -d giosteel88/${{ github.event.repository.name }}:latest
+          docker run -p 8080:80 --name ${{ github.event.repository.name }} -d giosteel88/laboratorio-final:latest
 
       - name: Wait for readiness
         run: | 
