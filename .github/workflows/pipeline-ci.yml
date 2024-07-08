@@ -124,7 +124,7 @@ jobs:
 
 
       - name: Build Docker image
-        run: docker build -t giosteel/laboratorio-final:latest .
+        run: docker build -t giosteel88/laboratorio-final:latest .
 
       - name: Install Grype
         run: |
@@ -132,11 +132,11 @@ jobs:
           brew install grype
 
       - name: Scan Docker image with Grype
-        run: grype giosteel/laboratorio-final:latest
+        run: grype giosteel/laboratorio-final:latest --fail-on high
 
       - name: Push
         run: |
-          docker push giosteel/laboratorio-final:latest
+          docker push giosteel88/laboratorio-final:latest
 
 
 
