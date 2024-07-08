@@ -134,6 +134,9 @@ jobs:
       - name: Scan Docker image with Grype
         run: |
           grype giosteel/laboratorio-final -o json > grype-report.json
+
+      - name: Print Grype report
+        run: cat grype-report.json
           
       - name: Check for vulnerabilities
         run: |
