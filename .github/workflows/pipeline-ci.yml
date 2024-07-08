@@ -132,7 +132,27 @@ jobs:
           brew install grype
 
       - name: Scan Docker image with Grype
-        run: grype giosteel/laboratorio-final:latest --fail-on high
+        run: |
+          grype giosteel/laboratorio-final -o json > grype-report.json
+          
+      - name: Check for vulnerabilities
+        run: |
+          critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-report.json)
+          high_count=$(jq '[.matches[] | select(.vulnerability.severity == "High")] | length' grype-report.json)
+          medium_count=$(jq '[.matches[] | select(.vulnerability.severity == "Medium")] | length' grype-report.json)
+          
+          echo "Critical vulnerabilities: $critical_count"
+          echo "High vulnerabilities: $high_count"
+          echo "Medium vulnerabilities: $medium_count"
+          
+          if [ "$critical_count" -gt 0 ] || [ "$high_count" -gt 0 ] || [ "$medium_count" -gt 0 ]; then
+            echo "Vulnerabilities found! Failing the job."
+            exit 1
+          fi
+
+      - name: Clean up
+        run: rm -f grype-report.json
+
 
       - name: Push
         run: |
